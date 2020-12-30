@@ -1,0 +1,24 @@
+*{
+  padding: 0;
+  margin: 0;
+  font-family: sans-serif;
+}
+h2{
+  text-shadow: 1px 1px #999999e3; 
+}
+
+.divPadrao{
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  flex-wrap: wrap;
+  text-align: center;
+  height: 150px;
+}
+
+.divDolar {
+  background-color: aquamarine;
+}
+.divEuro{
+  background-color: brown;
+}
