@@ -24,6 +24,12 @@ module.exports ={
               {loader: 'css-loader'}
             ]
         },
+        {
+          test: /.*\.(png|gif|jpe?g)$/i,
+          use:{
+            loader: 'file-loader'
+          }
+        },
       ]
     },
     devServer:{

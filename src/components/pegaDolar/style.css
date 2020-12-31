@@ -2,6 +2,7 @@
   padding: 0;
   margin: 0;
   font-family: sans-serif;
+  letter-spacing: 2px;
 }
 h2{
   text-shadow: 1px 1px #999999e3; 
@@ -13,12 +14,41 @@ h2{
   justify-content: center;
   flex-wrap: wrap;
   text-align: center;
-  height: 150px;
+  /* height: 150px; */
 }
 
 .divDolar {
-  background-color: aquamarine;
+  /* background-color: aquamarine; */
+  display: flex;
+  flex-direction: column;
+  flex-wrap: nowrap;
 }
 .divEuro{
-  background-color: brown;
+  /* background-color: brown; */
+  display: flex;
+  flex-direction: column;
+  flex-wrap: nowrap;
+}
+img{
+  height: 80px;
+}
+
+.divDoObjeto{
+  font-size: 20px;
+  text-shadow: 0 0 #333;
+}
+
+.inputs{
+  padding-bottom: 34px;
+}
+input[type="text"] {
+  padding: 10px;
+  width: 21.1em;
+  border-radius: 10px;
+  background-image: url('../../assets/fundo.png');
+  letter-spacing: normal !important;
+}
+
+#app{
+  margin-top: 5em;
 }
