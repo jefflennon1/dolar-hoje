@@ -2,7 +2,8 @@ import React, {useEffect, useState }from 'react';
 import api from '../../../services/api'
 import './style.css';
 import euroIcon from '../../assets/icon_euro_circ.png';
-import dolarIcon from '../../assets/icon_american_circ.png'
+import dolarIcon from '../../assets/icon_american_circ.png';
+import TableCoins from '../TableCoins'
 
 
 export default function PegaDolar(){
@@ -59,6 +60,7 @@ export default function PegaDolar(){
                   </div>)}
           </div>
       </div>
+      <TableCoins />
     </>
   )
 
