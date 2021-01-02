@@ -7,10 +7,7 @@ import dolarIcon from '../../assets/icon_american_circ.png'
 
 export default function PegaDolar(){
   const [ dolar, setDolar] = useState([]);
-  const [ euro, setEuro ] = useState([]);
-
- 
-
+  const [ euro, setEuro ] = useState([]); 
   useEffect(()=>{
         api.get('/usd').then((response)=>{
           setDolar(response.data);
@@ -23,51 +20,43 @@ export default function PegaDolar(){
   return(
     <>
       <div className="divDolar divPadrao">
-        <div className="image">
-          <img src={dolarIcon} alt=""/>
-        </div>
-          <h2>
-            {dolar.map(dolar => <div key={dolar.timestamp}>{dolar.name}</div>)}
-          </h2>
-          <div>  
-            <div className="divDoObjeto">
-              Valor hoje:
               {dolar.map(dolar=> 
               <div key={dolar.timestamp+1 }>
-                <span className="valorNaTelaDolar" value={retonaValorFormatado(dolar)}>
-                  {retonaValorFormatado(dolar)}
-                </span>
-                  <div className="inputDolar  inputs">
-                  R$ <input type="text" placeholder="Digite um valor para converter para esta moeda" id="dolarValor" onKeyPress={()=>onlynumber(event,dolar)} />
-                  </div>
-                </div>)}
-            </div>
-          </div>
+                    <div className="image">
+                      <img src={dolarIcon} alt=""/>
+                    </div>
+                    <h2> Dólar Americano</h2>
+                      <div className="divDoObjeto">
+                          <label htmlFor="" className="Valor Hoje">Valor hoje: </label>
+                          <label className="valorNaTelaDolar" value={retonaValorFormatado(dolar)}>
+                            {retonaValorFormatado(dolar)} $ 
+                          </label>
+                      <div className="inputDolar  inputs"  id="divInputDolar">
+                       <input type="text" placeholder="Digite um valor para converter para esta moeda"
+                       id="dolarValor" onKeyPress={()=>onlynumber(event,dolar)} onChange={()=>converteDolar(dolar)}/>
+                      </div>
+                    </div>
+             </div>
+                )}
       </div>
       {/*AQUI COMEÇA O EURO  */}
-      <div className="divEuro  divPadrao">
-         <div className="image">
-            <img src={euroIcon} alt=""/>
-          </div>
-          <h2>
-            {euro.map(euro =><div key={euro.timestamp}>
-              <span className="valor">
-                {euro.name}
-              </span>
-            </div>)}
-          </h2>
-          <div className="divDoObjeto">
-            Valor hoje:
-            {euro.map(euro =>
-              <div key={euro.timestamp+1}>
-                <span className="valorNaTelaEuro" value={retonaValorFormatado(euro)}>
-                   {retonaValorFormatado(euro)}
-                </span>
-                 <div className="inputEuro  inputs">
-                   R$ <input type="text" id="inputEuro"  onKeyPress={()=>onlynumber(event,euro)}
-                    placeholder="Digite um valor para converter para esta moeda" onChange={()=>converteEuro(euro)}/>
-                 </div>
-              </div>)}
+      <div className="divEuro  divPadrao"  id="containerEuro">
+          <div className="divDoObjeto" id="divDoObjetoEuro">
+                {euro.map(euro =>
+                <div key={euro.timestamp+1}>
+                    <div className="image">
+                      <img src={euroIcon} alt=""/>
+                    </div>
+                  <h2> Euro </h2>
+                  <label htmlFor="" id="valorHoje">Valor Hoje: &nbsp;</label>            
+                  <label className="valorNaTelaEuro" value={retonaValorFormatado(euro)}>
+                          {retonaValorFormatado(euro)} €
+                  </label>
+                  <div className="inputEuro  inputs"  id="divInputEuro">
+                     <input type="text" id="inputEuro"  onKeyPress={()=>onlynumber(event,euro)}
+                      placeholder="Digite um valor para converter para esta moeda" onChange={()=>converteEuro(euro)}/>
+                  </div>
+                  </div>)}
           </div>
       </div>
     </>
@@ -78,9 +67,7 @@ export default function PegaDolar(){
       return number.toFixed(2);
   }
   
-  
-  function onlynumber(evt, props) {
-    
+  function onlynumber(evt) {
     var theEvent = evt || window.event;
     var key = theEvent.keyCode || theEvent.which;
     key = String.fromCharCode( key );
@@ -92,16 +79,42 @@ export default function PegaDolar(){
     }
  }
 
- function converteEuro(props){
-   var euroInput = document.getElementById('inputEuro');
-   var inputValor = euroInput.value;
-   var converSao = props.ask * euroInput;
+    function converteEuro(props){
+          verifcaSeJaExisteConversao();
+          var euroInput = document.getElementById('inputEuro');
+          var divInput = document.getElementById('divInputEuro')
+          var inputValor = euroInput.value;
+          var inputValorEuro = props.ask * inputValor;
 
-  const valorConvertido = document.createElement('span');
-  valorConvertido.setAttribute('class','spanTextoConvertido');
-  const pegaSpan = document.getElementsByClassName('spanTextoConvertido');
-  console.log(pegaSpan)
-  
- }
+          const valorConvertido = document.createElement('label');
+          valorConvertido.setAttribute('id','labelEuroConvertido');
+          valorConvertido.innerText = ' = '+inputValorEuro.toFixed(2).toString().replace(".", ",")+' R$';
+
+          divInput.append(valorConvertido);
+    }  
+    function converteDolar(props){
+         verifcaSeJaExisteConversao();
+          var euroInput = document.getElementById('dolarValor');
+          var divInput = document.getElementById('divInputDolar')
+          var inputValor = euroInput.value;
+          var inputValorDolar = props.ask * inputValor;
+
+          const valorConvertido = document.createElement('label');
+          valorConvertido.setAttribute('id','labelDolarConvertido');
+          valorConvertido.innerText = ' = '+inputValorDolar.toFixed(2).toString().replace(".", ",")+' R$';
+
+          divInput.append(valorConvertido);
+    }
+
+    function verifcaSeJaExisteConversao(){
+        const pegaLabelEuro = document.getElementById('labelEuroConvertido');
+        const pegaLabelDolar = document.getElementById('labelDolarConvertido');
+        if(pegaLabelEuro != null){
+          pegaLabelEuro.remove();
+        }
+        if(pegaLabelDolar != null){
+          pegaLabelDolar.remove();
+        }
+    }
 
 }
